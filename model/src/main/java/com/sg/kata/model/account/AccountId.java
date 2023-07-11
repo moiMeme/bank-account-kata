@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public record AccountId(String value) {
 
-    private static final int ACCOUNT_NUMBER_LENGTH = 10;
+    public static final int ACCOUNT_NUMBER_LENGTH = 10;
 
     public AccountId {
         Objects.requireNonNull(value, "'value' must not be null");

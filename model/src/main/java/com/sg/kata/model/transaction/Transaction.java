@@ -2,6 +2,7 @@ package com.sg.kata.model.transaction;
 
 import com.sg.kata.model.account.AccountId;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Transaction implements Comparable<Transaction> {
@@ -9,7 +10,7 @@ public class Transaction implements Comparable<Transaction> {
     private AccountId creditAccount;
     private AccountId debitAccount;
     private TransactionType trsType;
-    private Double amount;
+    private BigDecimal amount;
     private LocalDateTime trsDate;
 
     public TransactionId getTransactionId() {
@@ -44,11 +45,11 @@ public class Transaction implements Comparable<Transaction> {
         this.trsType = trsType;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

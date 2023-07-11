@@ -2,8 +2,11 @@ package com.sg.kata.model.account;
 
 import com.sg.kata.model.customer.CustomerId;
 import com.sg.kata.model.soa.StatementOfAccount;
+import com.sg.kata.model.transaction.Transaction;
 
+import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -11,9 +14,24 @@ public class Account {
 
     private AccountId accountNumber;
     private CustomerId customerId;
-    private Double balance;
+    private BigDecimal balance;
     private Currency currency;
     private final Set<StatementOfAccount> soa = new TreeSet<>();
+
+    public synchronized void addTransaction(Transaction transaction) {
+        AccountId creditAccountNumber = transaction.getCreditAccount();
+        AccountId debitAccountNumber = transaction.getDebitAccount();
+        if (Objects.equals(this.accountNumber, creditAccountNumber)) {
+            balance = balance.add(transaction.getAmount());
+        } else {
+            if (Objects.equals(this.accountNumber, debitAccountNumber)) {
+                balance = balance.subtract(transaction.getAmount());
+            } else {
+                throw new IllegalArgumentException("Adding transaction not allowed for " + transaction.getTransactionId().value());
+            }
+        }
+        soa.add(new StatementOfAccount(this.accountNumber, transaction.getTrsDate(), transaction.getTrsType().getDescription(), transaction.getAmount()));
+    }
 
     public AccountId getAccountNumber() {
         return accountNumber;
@@ -31,11 +49,11 @@ public class Account {
         this.customerId = customerId;
     }
 
-    public Double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(Double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 

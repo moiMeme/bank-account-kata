@@ -2,6 +2,7 @@ package com.sg.kata.model.soa;
 
 import com.sg.kata.model.account.AccountId;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class StatementOfAccount implements Comparable<StatementOfAccount> {
@@ -9,9 +10,9 @@ public class StatementOfAccount implements Comparable<StatementOfAccount> {
     private AccountId accountId;
     private LocalDateTime trsDate;
     private String Description;
-    private Double amount;
+    private BigDecimal amount;
 
-    public StatementOfAccount(AccountId accountId, LocalDateTime trsDate, String description, Double amount) {
+    public StatementOfAccount(AccountId accountId, LocalDateTime trsDate, String description, BigDecimal amount) {
         this.accountId = accountId;
         this.trsDate = trsDate;
         Description = description;
@@ -42,11 +43,11 @@ public class StatementOfAccount implements Comparable<StatementOfAccount> {
         Description = description;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
