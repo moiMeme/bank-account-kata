@@ -4,9 +4,11 @@ import com.sg.kata.model.account.AccountId;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class StatementOfAccount implements Comparable<StatementOfAccount> {
 
+    private int lineNo;
     private AccountId accountId;
     private LocalDateTime trsDate;
     private String Description;
@@ -17,6 +19,14 @@ public class StatementOfAccount implements Comparable<StatementOfAccount> {
         this.trsDate = trsDate;
         Description = description;
         this.amount = amount;
+    }
+
+    public int getLineNo() {
+        return lineNo;
+    }
+
+    public void setLineNo(int lineNo) {
+        this.lineNo = lineNo;
     }
 
     public AccountId getAccountId() {
@@ -54,5 +64,18 @@ public class StatementOfAccount implements Comparable<StatementOfAccount> {
     @Override
     public int compareTo(StatementOfAccount soa) {
         return this.trsDate.compareTo(soa.getTrsDate());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StatementOfAccount that = (StatementOfAccount) o;
+        return lineNo == that.lineNo && Objects.equals(accountId, that.accountId) && Objects.equals(trsDate, that.trsDate) && Objects.equals(Description, that.Description) && Objects.equals(amount, that.amount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lineNo, accountId, trsDate, Description, amount);
     }
 }

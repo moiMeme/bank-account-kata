@@ -6,16 +6,19 @@ import java.util.function.Supplier;
 
 public enum TransactionType {
 
-    DEPOSIT("Deposit", "C", () -> new AccountId("1234000000")),
-    WITHDRAWAL("Withdrawal", "D", () -> new AccountId("4321000000"));
+    DEPOSIT("Deposit", "C", "111111", () -> new AccountId("10000EUR111111ABCDEF")),
+    WITHDRAWAL("Withdrawal", "D", "222222", () -> new AccountId("10000EUR222222ABCDEF"));
 
     private final String description;
     private final Supplier<AccountId> accountSupplier;
     private final String signe;
 
-    TransactionType(String description, String signe, Supplier<AccountId> accountSupplier) {
+    private final String gl;
+
+    TransactionType(String description, String signe, String gl, Supplier<AccountId> accountSupplier) {
         this.description = description;
         this.signe = signe;
+        this.gl = gl;
         this.accountSupplier = accountSupplier;
     }
 
@@ -29,5 +32,9 @@ public enum TransactionType {
 
     public String getSigne() {
         return signe;
+    }
+
+    public String getGl() {
+        return gl;
     }
 }

@@ -5,16 +5,18 @@ import com.sg.kata.model.account.AccountId;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Currency;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TransactionFactoryTest {
 
-    public static Transaction createTransaction(AccountId account, BigDecimal amount, TransactionType type) {
+    public static Transaction createTransaction(AccountId account, BigDecimal amount, TransactionType type, Currency currency) {
         Transaction transaction = new Transaction();
         transaction.setTransactionId(new TransactionId(ThreadLocalRandom.current().nextInt(1_000_000)));
         transaction.setTrsType(type);
         transaction.setTrsDate(generateRandomDateTime());
         transaction.setAmount(amount);
+        transaction.setCurrency(currency);
         if ("D".equals(type.getSigne())) {
             transaction.setCreditAccount(type.getInternalAccount());
             transaction.setDebitAccount(account);

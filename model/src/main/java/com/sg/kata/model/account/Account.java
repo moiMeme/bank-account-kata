@@ -5,10 +5,7 @@ import com.sg.kata.model.soa.StatementOfAccount;
 import com.sg.kata.model.transaction.Transaction;
 
 import java.math.BigDecimal;
-import java.util.Currency;
-import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Account {
 
@@ -17,6 +14,10 @@ public class Account {
     private BigDecimal balance;
     private Currency currency;
     private final Set<StatementOfAccount> soa = new TreeSet<>();
+
+    public synchronized void addTransaction(Transaction...transactions) {
+        Arrays.stream(transactions).parallel().forEach(this::addTransaction);
+    }
 
     public synchronized void addTransaction(Transaction transaction) {
         AccountId creditAccountNumber = transaction.getCreditAccount();
@@ -68,4 +69,6 @@ public class Account {
     public Set<StatementOfAccount> getSoa() {
         return soa;
     }
+
+
 }

@@ -4,6 +4,8 @@ import com.sg.kata.model.account.AccountId;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Currency;
+import java.util.Objects;
 
 public class Transaction implements Comparable<Transaction> {
     private TransactionId transactionId;
@@ -12,6 +14,7 @@ public class Transaction implements Comparable<Transaction> {
     private TransactionType trsType;
     private BigDecimal amount;
     private LocalDateTime trsDate;
+    private Currency currency;
 
     public TransactionId getTransactionId() {
         return transactionId;
@@ -59,6 +62,14 @@ public class Transaction implements Comparable<Transaction> {
 
     public void setTrsDate(LocalDateTime trsDate) {
         this.trsDate = trsDate;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     @Override

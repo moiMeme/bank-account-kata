@@ -2,30 +2,30 @@ package com.sg.kata.model.account;
 
 
 import com.sg.kata.model.customer.CustomerId;
+import com.sg.kata.model.transaction.TransactionType;
 
 import java.math.BigDecimal;
 import java.util.Currency;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class AccountFactoryTest {
 
-  private static final String ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+  public static Account createAccountForCustomer(CustomerId customerId, Currency currency, AccountType accountType) {
+    Account account = new Account();
+    account.setCustomerId(customerId);
+    account.setBalance(new BigDecimal(0));
+    account.setCurrency(currency);
+    String accountNumber = String.format("%" + 11 + "s", customerId.value()).replace(" ", "0") + currency.getCurrencyCode() + accountType.getType();
+    account.setAccountNumber(new AccountId(accountNumber));
 
-  public static AccountId randomAccountId() {
-    ThreadLocalRandom random = ThreadLocalRandom.current();
-    char[] chars = new char[AccountId.ACCOUNT_NUMBER_LENGTH];
-    for (int i = 0; i < AccountId.ACCOUNT_NUMBER_LENGTH; i++) {
-      chars[i] = ALPHABET.charAt(random.nextInt(ALPHABET.length()));
-    }
-    return new AccountId(new String(chars));
+    return account;
   }
 
-  public static Account createAccountForRandomCustomer() {
+  public static Account createInternalAccount(Currency currency, TransactionType type) {
     Account account = new Account();
-    account.setAccountNumber(randomAccountId());
-    account.setCustomerId(new CustomerId(ThreadLocalRandom.current().nextInt(1_000_000)));
+    account.setCustomerId(new CustomerId(10000));
     account.setBalance(new BigDecimal(0));
-    account.setCurrency(Currency.getInstance("EUR"));
+    account.setCurrency(currency);
+    account.setAccountNumber(type.getInternalAccount());
     return account;
   }
 
