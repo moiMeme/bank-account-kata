@@ -21,25 +21,6 @@ public class Account extends Validator {
     @NotNull
     private AccountType accountType;
 
-    /*public synchronized void addTransaction(Transaction...transactions) {
-        Arrays.stream(transactions).parallel().forEach(this::addTransaction);
-    }
-
-    public synchronized void addTransaction(Transaction transaction) {
-        AccountId creditAccountNumber = transaction.getCreditAccount();
-        AccountId debitAccountNumber = transaction.getDebitAccount();
-        if (Objects.equals(this.accountNumber, creditAccountNumber)) {
-            balance = balance.add(transaction.getAmount());
-        } else {
-            if (Objects.equals(this.accountNumber, debitAccountNumber)) {
-                balance = balance.subtract(transaction.getAmount());
-            } else {
-                throw new IllegalArgumentException("Adding transaction not allowed for " + transaction.getTransactionId().value());
-            }
-        }
-        soa.add(new StatementOfAccount(this.accountNumber, transaction.getTrsDate(), transaction.getTrsType().getDescription(), transaction.getAmount()));
-    }*/
-
     public AccountId getAccountNumber() {
         return accountNumber;
     }

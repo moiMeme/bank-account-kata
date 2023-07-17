@@ -26,6 +26,7 @@ public class TransactionCurrencyValidation implements ValidatorHandler {
         return errors;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean isValidAccordingToTheTransactionCurrency(AccountId accountId, Currency currency) {
         if (Objects.isNull(accountId)) {
             return true;

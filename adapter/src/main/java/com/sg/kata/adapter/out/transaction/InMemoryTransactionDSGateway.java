@@ -35,24 +35,33 @@ public class InMemoryTransactionDSGateway implements TransactionDSGateway {
     @Override
     public Set<Transaction> findByAccountAndDate(String accountNumber, LocalDateTime fromDate, LocalDateTime toDate) {
         return transactions.values().parallelStream()
-                .filter(transaction -> !transaction.getTrsDate().isBefore(fromDate)
-                        && !transaction.getTrsDate().isAfter(toDate))
+                .filter(transaction -> filter(transaction, new AccountId(accountNumber), fromDate, toDate))
                 .collect(Collectors.toCollection(TreeSet::new));
+    }
+
+    private boolean filter(Transaction transaction, AccountId accountId, LocalDateTime fromDate, LocalDateTime toDate) {
+        if (transaction.getCreditAccount().equals(accountId) || transaction.getDebitAccount().equals(accountId)) {
+            return !transaction.getTrsDate().isBefore(fromDate) && !transaction.getTrsDate().isAfter(toDate);
+        }
+        return false;
     }
 
     @Override
     public BigDecimal findBalanceByAccountAndDate(AccountId accountId, LocalDateTime beforeThisDate, boolean inclusive) {
         return transactions.values().parallelStream()
-                .filter(transaction -> filter(transaction, beforeThisDate, inclusive))
+                .filter(transaction -> filter(transaction, accountId, beforeThisDate, inclusive))
                 .map(this::amount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private boolean filter(Transaction transaction, LocalDateTime beforeThisDate, boolean inclusive) {
-        if (inclusive) {
-            return !transaction.getTrsDate().isAfter(beforeThisDate);
+    private boolean filter(Transaction transaction, AccountId accountId, LocalDateTime beforeThisDate, boolean inclusive) {
+        if (transaction.getCreditAccount().equals(accountId) || transaction.getDebitAccount().equals(accountId)) {
+            if (inclusive) {
+                return !transaction.getTrsDate().isAfter(beforeThisDate);
+            }
+            return transaction.getTrsDate().isBefore(beforeThisDate);
         }
-        return transaction.getTrsDate().isBefore(beforeThisDate);
+        return false;
     }
 
     private BigDecimal amount(Transaction transaction) {

@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 class GetBalanceServiceTest {
 
     private static final AccountId TEST_ACCOUNT_ID = new AccountId("00000061157EUR123456");
-    private final TransactionDSGateway transactionDSGateway = mock(TransactionDSGateway .class);;
+    private final TransactionDSGateway transactionDSGateway = mock(TransactionDSGateway .class);
     private final GetBalanceService getBalanceService = new GetBalanceService(transactionDSGateway);
 
 

@@ -1,6 +1,5 @@
 package com.sg.kata.model.account;
 
-import com.sg.kata.model.customer.CustomerId;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -10,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 public class AccountIdTest {
 
+    @SuppressWarnings("SpellCheckingInspection")
     @ParameterizedTest
     @ValueSource(strings = {"1234", "FFFSFSDFSFSDFSDFSDFSDFSDFSDFSD", "0"})
     void givenAValueLengthLessThanConfiguredLength_newAccountId_throwsException(String value) {

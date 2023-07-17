@@ -3,13 +3,11 @@ package com.sg.kata.application.service.account;
 import com.sg.kata.application.port.in.account.AddAccountUseCase;
 import com.sg.kata.application.port.out.account.AccountDSGateway;
 import com.sg.kata.model.account.Account;
-import com.sg.kata.model.account.AccountId;
 import com.sg.kata.model.account.AccountType;
 import com.sg.kata.model.account.factory.AccountFactory;
 import com.sg.kata.model.common.Util;
 import com.sg.kata.model.customer.CustomerId;
 
-import java.math.BigDecimal;
 import java.util.Currency;
 
 public class AddAccountService implements AddAccountUseCase {

@@ -20,7 +20,4 @@ public class CommonException extends RuntimeException {
         this.errorCode = error;
     }
 
-    public CommonError getErrorCode() {
-        return errorCode;
-    }
 }

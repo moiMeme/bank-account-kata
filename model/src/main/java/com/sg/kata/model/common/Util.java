@@ -7,8 +7,6 @@ import com.sg.kata.model.common.exception.ErrorCode;
 
 import java.text.MessageFormat;
 import java.util.Currency;
-import java.util.Objects;
-import java.util.regex.Pattern;
 
 public class Util {
 
@@ -21,6 +19,7 @@ public class Util {
                 accountType.getType();
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public static <T> T requireNonNull(T obj, String objectName) {
         return requireNonNull(obj, ErrorCode.EXP005, objectName);
     }

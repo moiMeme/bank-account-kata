@@ -17,7 +17,6 @@ import com.sg.kata.application.port.out.account.AccountDSGateway;
 import com.sg.kata.application.port.out.transaction.TransactionDSGateway;
 import com.sg.kata.model.transaction.TransactionType;
 
-import java.util.Arrays;
 import java.util.Currency;
 
 public class ApplicationConfig {

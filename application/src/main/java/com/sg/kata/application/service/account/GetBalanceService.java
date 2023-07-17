@@ -1,7 +1,6 @@
 package com.sg.kata.application.service.account;
 
 import com.sg.kata.application.port.in.account.GetBalanceUserCase;
-import com.sg.kata.application.port.out.account.AccountDSGateway;
 import com.sg.kata.application.port.out.transaction.TransactionDSGateway;
 import com.sg.kata.model.account.AccountId;
 import com.sg.kata.model.common.Util;

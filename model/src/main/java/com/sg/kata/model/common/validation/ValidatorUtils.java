@@ -5,7 +5,6 @@ import com.sg.kata.model.common.exception.ErrorCode;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
-import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
