@@ -1,19 +1,28 @@
 package com.sg.kata.model.transaction;
 
 import com.sg.kata.model.account.AccountId;
+import com.sg.kata.model.common.validation.NotNull;
+import com.sg.kata.model.common.validation.Valid;
+import com.sg.kata.model.common.validation.Validator;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Currency;
-import java.util.Objects;
 
-public class Transaction implements Comparable<Transaction> {
+public class Transaction extends Validator implements Comparable<Transaction> {
+    @NotNull
     private TransactionId transactionId;
+    @NotNull
     private AccountId creditAccount;
+    @NotNull
     private AccountId debitAccount;
+    @NotNull
     private TransactionType trsType;
+    @NotNull
     private BigDecimal amount;
+    @NotNull
     private LocalDateTime trsDate;
+    @Valid(handler = TransactionCurrencyValidation.class)
     private Currency currency;
 
     public TransactionId getTransactionId() {

@@ -1,21 +1,27 @@
 package com.sg.kata.model.account;
 
+import com.sg.kata.model.common.validation.NotNull;
+import com.sg.kata.model.common.validation.Valid;
+import com.sg.kata.model.common.validation.Validator;
 import com.sg.kata.model.customer.CustomerId;
-import com.sg.kata.model.soa.StatementOfAccount;
-import com.sg.kata.model.transaction.Transaction;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Currency;
 
-public class Account {
-
+public class Account extends Validator {
+    @NotNull
+    @Valid(handler = AccountNumberValidation.class)
     private AccountId accountNumber;
+    @NotNull
     private CustomerId customerId;
+    @NotNull
     private BigDecimal balance;
+    @NotNull
     private Currency currency;
-    private final Set<StatementOfAccount> soa = new TreeSet<>();
+    @NotNull
+    private AccountType accountType;
 
-    public synchronized void addTransaction(Transaction...transactions) {
+    /*public synchronized void addTransaction(Transaction...transactions) {
         Arrays.stream(transactions).parallel().forEach(this::addTransaction);
     }
 
@@ -32,7 +38,7 @@ public class Account {
             }
         }
         soa.add(new StatementOfAccount(this.accountNumber, transaction.getTrsDate(), transaction.getTrsType().getDescription(), transaction.getAmount()));
-    }
+    }*/
 
     public AccountId getAccountNumber() {
         return accountNumber;
@@ -66,9 +72,11 @@ public class Account {
         this.currency = currency;
     }
 
-    public Set<StatementOfAccount> getSoa() {
-        return soa;
+    public AccountType getAccountType() {
+        return accountType;
     }
 
-
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
+    }
 }
