@@ -12,7 +12,6 @@
         <module>model</module>
         <module>adapter</module>
         <module>application</module>
-        <module>bootstap</module>
     </modules>
 
     <properties>
