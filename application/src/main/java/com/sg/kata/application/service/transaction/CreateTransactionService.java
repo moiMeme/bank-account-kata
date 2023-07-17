@@ -4,6 +4,7 @@ import com.sg.kata.application.port.in.transaction.CreateTransactionUseCase;
 import com.sg.kata.application.port.out.account.AccountDSGateway;
 import com.sg.kata.application.port.out.transaction.TransactionDSGateway;
 import com.sg.kata.model.account.Account;
+import com.sg.kata.model.account.AccountId;
 import com.sg.kata.model.common.Util;
 import com.sg.kata.model.common.exception.CommonException;
 import com.sg.kata.model.common.exception.ErrorCode;
@@ -12,6 +13,7 @@ import com.sg.kata.model.transaction.TransactionType;
 import com.sg.kata.model.transaction.factory.TransactionFactory;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Optional;
 
@@ -29,21 +31,27 @@ public class CreateTransactionService implements CreateTransactionUseCase {
 
     @Override
     public Transaction newTransaction(String accountNumber, TransactionType trsType, BigDecimal amount, Currency currency) {
+        return newTransaction(accountNumber, trsType, amount, currency, LocalDateTime.now());
+    }
+
+    @Override
+    public Transaction newTransaction(String accountNumber, TransactionType trsType, BigDecimal amount, Currency currency, LocalDateTime trsDate) {
         Util.requireNonNull(accountNumber, "accountNumber");
         Util.requireNonNull(trsType, "trsType");
         Util.requireNonNull(amount, "amount");
         Util.requireNonNull(currency, "currency");
 
-        Account account = accountDSGateway.getById(accountNumber).orElseThrow(() -> new AccountNotFoundException(accountNumber));
+
+        Account account = accountDSGateway.getById(new AccountId(accountNumber)).orElseThrow(() -> new AccountNotFoundException(accountNumber));
         if (account.getBalance().compareTo(amount) < 0 && "D".equals(trsType.getSigne())) {
             throw new CommonException(ErrorCode.EXP009);
         }
         if (!account.getCurrency().equals(currency)) {
             throw new CommonException(ErrorCode.EXP007, accountNumber);
         }
-        Account internalAccount = accountDSGateway.getById(trsType.getInternalAccount().value()).orElseThrow(() -> new AccountNotFoundException(trsType.getInternalAccount().value()));
+        Account internalAccount = accountDSGateway.getById(trsType.getInternalAccount()).orElseThrow(() -> new AccountNotFoundException(trsType.getInternalAccount().value()));
 
-        Transaction transaction = transactionFactory.create(account.getAccountNumber(), amount, trsType, currency);
+        Transaction transaction = transactionFactory.create(account.getAccountNumber(), amount, trsType, currency, trsDate);
         Transaction createdTransaction = transactionDSGateway.save(transaction);
 
         updateAccount(account, createdTransaction);
