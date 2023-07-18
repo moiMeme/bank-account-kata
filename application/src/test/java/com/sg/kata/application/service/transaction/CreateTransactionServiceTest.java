@@ -109,7 +109,7 @@ class CreateTransactionServiceTest {
     void givenNewTransactionForAnAccountWithBalanceEqualToZeroAndTransactionTypeEqualToWithdrawal_ExceptionIsThrown() {
 
         ThrowableAssert.ThrowingCallable invocation = () -> createTransactionService.newTransaction(TEST_ACCOUNT_ID.value(), TransactionType.WITHDRAWAL, new BigDecimal(150), EUR);
-        assertThatExceptionOfType(CommonException.class).isThrownBy(invocation).withMessage(ErrorCode.EXP009.getDescription());
+        assertThatExceptionOfType(CommonException.class).isThrownBy(invocation).withMessage(Util.formatErrorMessage(ErrorCode.EXP009));
         verify(accountDSGateway, times(1)).getById(TEST_ACCOUNT_ID);
         verify(transactionDSGateway, never()).save(any());
     }
